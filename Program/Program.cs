@@ -6,17 +6,98 @@ namespace GradeCalculator
     {
         static void Main(string[] args)
         {
-            Console.Title = "Grade Calculator";
+            Console.Title = "DCIT 318 Assignment 1";
             bool running = true;
 
             while (running)
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("=== DCIT 318: Assignment 1 ===");
+                Console.WriteLine("Select an option:");
+                Console.WriteLine("1. Grade Calculator");
+                Console.WriteLine("2. Ticket Price Calculator");
+                Console.WriteLine("3. Triangle Type Identifier");
+                Console.WriteLine("4. Exit");
+                Console.WriteLine("\n0. Return to Main Menu");
+                Console.ResetColor();
+                Console.Write("\nEnter your choice (0-4): ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "0":
+                        continue;
+                    case "1":
+                        RunGradeCalculator();
+                        break;
+                    case "2":
+                        TicketPriceCalculator.Run();
+                        break;
+                    case "3":
+                        TriangleTypeIdentifier.Run();
+                        break;
+                    case "4":
+                        running = false;
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Invalid choice. Press any key to try again...");
+                        Console.ResetColor();
+                        Console.ReadKey();
+                        break;
+                }
+            }
+
+
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("\nThank you for using the Assignment 1 Application!");
+            Console.ResetColor();
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
+            
+
+            
+        }
+
+        /// <summary>
+        /// Runs the Grade Calculator loop.
+        /// </summary>
+        static void RunGradeCalculator()
+        {
+            bool running = true;
+            while (running)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("=== GRADE CALCULATOR ===");
+                Console.WriteLine("(Enter '0' to return to main menu or 'exit' to quit)");
                 Console.ResetColor();
 
-                int grade = PromptForGrade();
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("Enter your numerical grade (0 - 100): ");
+                Console.ResetColor();
+                string input = Console.ReadLine();
+
+                if (input?.ToLower() == "exit")
+                {
+                    Environment.Exit(0);
+                }
+                if (input == "0")
+                {
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out int grade))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                    Console.ResetColor();
+                    Console.WriteLine("\nPress any key to continue...");
+                    Console.ReadKey();
+                    continue;
+                }
 
                 string letterGrade = GetLetterGrade(grade, out ConsoleColor gradeColor);
 
@@ -26,63 +107,18 @@ namespace GradeCalculator
 
                 // Prompt to continue or end
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nPress Enter to calculate another grade or type 'end' to exit.");
+                Console.WriteLine("\nPress Enter to calculate another grade, type '0' to return to main menu, or 'exit' to quit.");
                 Console.ResetColor();
-                string input = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(input) && input.Trim().ToLower() == "end")
+                input = Console.ReadLine();
+                if (input?.ToLower() == "exit")
                 {
-                    running = false;
+                    Environment.Exit(0);
+                }
+                if (input == "0")
+                {
+                    return;
                 }
             }
-
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("\nThank you for using the Grade Calculator!");
-            Console.ResetColor();
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
-        }
-
-        /// <summary>
-        /// Prompts the user for a valid grade between 0 and 100.
-        /// </summary>
-        /// <returns>An integer grade.</returns>
-        static int PromptForGrade()
-        {
-            int grade;
-            while (true)
-            {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("Enter your numerical grade (0 - 100): ");
-                Console.ResetColor();
-                string input = Console.ReadLine();
-
-                if (string.IsNullOrWhiteSpace(input))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Input cannot be empty. Please enter a number between 0 and 100.");
-                    Console.ResetColor();
-                    continue;
-                }
-
-                if (!int.TryParse(input, out grade))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid input. Please enter a valid number.");
-                    Console.ResetColor();
-                    continue;
-                }
-
-                if (grade < 0 || grade > 100)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Grade must be between 0 and 100.");
-                    Console.ResetColor();
-                    continue;
-                }
-
-                break;
-            }
-            return grade;
         }
 
         /// <summary>
