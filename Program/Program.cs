@@ -22,7 +22,7 @@ namespace GradeCalculator
                 Console.WriteLine("\n0. Return to Main Menu");
                 Console.ResetColor();
                 Console.Write("\nEnter your choice (0-4): ");
-                string choice = Console.ReadLine();
+                string choice = Console.ReadLine() ?? string.Empty;
 
                 switch (choice)
                 {
@@ -56,9 +56,9 @@ namespace GradeCalculator
             Console.ResetColor();
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
-            
 
-            
+
+
         }
 
         /// <summary>
@@ -72,17 +72,21 @@ namespace GradeCalculator
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("=== GRADE CALCULATOR ===");
-                Console.WriteLine("(Enter '0' to return to main menu or 'exit' to quit)");
+                Console.WriteLine("(Enter '0' to return to main menu, 'start' to restart, 'end' to quit)");
                 Console.ResetColor();
 
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("Enter your numerical grade (0 - 100): ");
                 Console.ResetColor();
-                string input = Console.ReadLine();
+                string input = Console.ReadLine() ?? string.Empty;
 
-                if (input?.ToLower() == "exit")
+                if (input?.ToLower() == "start")
                 {
-                    Environment.Exit(0);
+                    continue;
+                }
+                if (input?.ToLower() == "end")
+                {
+                    return;
                 }
                 if (input == "0")
                 {
@@ -107,12 +111,12 @@ namespace GradeCalculator
 
                 // Prompt to continue or end
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nPress Enter to calculate another grade, type '0' to return to main menu, or 'exit' to quit.");
+                Console.WriteLine("\nPress Enter to calculate another grade, type '0' to return to main menu, or 'end' to quit.");
                 Console.ResetColor();
-                input = Console.ReadLine();
-                if (input?.ToLower() == "exit")
+                input = Console.ReadLine() ?? string.Empty;
+                if (input?.ToLower() == "end")
                 {
-                    Environment.Exit(0);
+                    return;
                 }
                 if (input == "0")
                 {
